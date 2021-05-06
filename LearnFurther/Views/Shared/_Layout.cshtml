@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LearnFurther</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="bg-image"
+         style="background-image: url('https://drive.google.com/uc?export=view&id=1abror7bROxaF1EBKheH-pMQEj0zk-QHh');
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        height: 100vh
+   ">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-light border-bottom-0 box-shadow mt-n1 mb-3">
+                <div class="container mt-n1 mb-n1">
+                    <a class="navbar-brand text-black-50" asp-area="" asp-controller="Home" asp-action="Index">LearnFurther</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item ml-sm-auto mr-sm-1">
+                                <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            @*<li class="nav-item ml-sm-2 mr-sm-1">
+            <a class="btn btn-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
+                            <li class="nav-item dropdown open @*input-group*@ ml-sm-2 mr-sm-1">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-light">Задания</button>
+                                    <button class="btn btn-light dropdown-toggle dropdown-toggle-split rounded-right"
+                                            type="button" id="dropdownMenu5"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-controller="Task" asp-action="AddTask">Список заданий</a>
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                                        {
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" asp-controller="Task" asp-action="AddTask">Добавить задание</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" asp-controller="Task" asp-action="AddTask">Изменить задание</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" asp-controller="Task" asp-action="AddTask">Требуется проверка</a>
+                                        }
+                                    </div>
+                                </div>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item ml-sm-2 mr-sm-1">
+                                    <a class="btn btn-light" asp-area="" asp-controller="Users" asp-action="UserList">Пользователи</a>
+                                </li>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class=" nav-item ml-sm-2 mr-sm-1">
+                                    <form method="post" asp-controller="Account" asp-action="Logout">
+                                        <button class="btn btn-light" type="submit">Выход</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class=" nav-item ml-sm-2 mr-sm-1">
+                                    <a class="btn btn-light" asp-controller="Account" asp-action="Login">Вход</a>
+                                </li>
+                                <li class=" nav-item ml-sm-2">
+                                    <a class="btn btn-light" asp-controller="Account" asp-action="Register">Регистрация</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container bg-light h-50 w-auto rounded-bottom overflow-auto" id="mainContainer">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - LearnFurther - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
