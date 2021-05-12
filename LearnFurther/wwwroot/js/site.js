@@ -1,12 +1,42 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Write your JavaScript code.
+var i = 0;
+var arr = new Map();
 
-// Write your JavaScript code.
-var x = 0;
 
 function addInput() {
-    /*var str = '<input type="text" class="link" id = "inputOne' + (One + 1) + '" placeholder="Ссылка на профиль *"> <input type="text" class="amount" id = "inputTwo' + (Two + 1) + '" placeholder="Кол-во"> <div id="input' + (x + 1) + '"></div>';*/
-    var str = '<textarea class="form-control mt-2 mb-3" id = "question' + x + '" rows="1" style="resize:none"></textarea>'
+    var str = '<div class="d-flex justify-content-around row" id = ' + i + '><textarea class="form-control mt-2 mb-3 ml-3 mr-3" name = "Questions[' + i + '].Context" rows="1" style="resize:none"></textarea><button class="btn btn-outline-dark col-4 align-content-center" id="button' + i + '" onclick="addAnswer(this)" type="button">Добавить ответ</button></div>'
+    
     butt.insertAdjacentHTML('beforebegin', str);
-    x++;
+    i++;
+}
+
+function addAnswer(val) {
+    let x;
+    //alert(val);
+    //alert(val.parentNode.id);
+    let listId = val.parentNode.id;
+    /*alert(listId);*/
+    if (arr.has(listId)) {
+        x = arr.get(listId);
+        x += 1;
+        arr.set(listId, x)
+    }
+    else {
+        x = 0;
+        arr.set(listId, x)
+    }
+    var str = '<div class="form-check col-sm-4"><input class="form-check-input" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control ml-2 mb-2" name = Questions[' + listId + '].Answers[' + x +'].Content></div >'
+    val.insertAdjacentHTML('beforebegin', str);
+}
+
+function ShowTask(val) {
+    /*alert(val);*/
+    /*window.location.href = '@Url.Action("Show", "Task", new { id = ' + val + ' }, null)';*/
+    window.location.href = "@Url.RouteUrl(new { controller = 'Home', action = 'Index'})";
+    //$.ajax({
+    //    url: '/Task/AddTask',
+    //    type: 'GET',
+    //    data: {},
+    //    success: null
+    //})
 }

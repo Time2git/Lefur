@@ -9,10 +9,10 @@ namespace LearnFurther.Models
     public class Answer
     {
         [Key]
-        public ushort Answerid { get; set; }
+        public short Answerid { get; set; }//в mysql меняем на ushort
         public string Content { get; set; }
-        public bool state { get; set; }
-        public int? QuestionId { get; set; }
+        public bool State { get; set; }
+        //public int? QuestionId { get; set; }
         public virtual Question Question { get; set; }
     }
 }

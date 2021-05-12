@@ -12,11 +12,12 @@ namespace LearnFurther.Models
     }
     public class Task
     {
-        public ushort TaskId { get; set; }
+        public short TaskId { get; set; }//в mysql меняем на ushort
         public string Title { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual IList<Question> Questions { get; set; }
         public virtual ICollection<Result> Results { get; set; }
         public TaskTypes Types { get; set; }
+        public User Author { get; set; }
     }
 }

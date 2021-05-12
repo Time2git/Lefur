@@ -75,7 +75,11 @@ D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\runtimes\win\lib\netstandard
 D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
-D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\AddTask.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\Create.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\Edit.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\UserList.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskList.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\TaskContext\QuestionkList.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Show.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\AddTask.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Execute.cshtml.g.cs

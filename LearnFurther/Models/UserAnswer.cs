@@ -9,6 +9,7 @@ namespace LearnFurther.Models
     {
         public ushort UserAnswerid { get; set; }
         public string Content { get; set; }
+        public bool State { get; set; }
         public int? UserId { get; set; }
         public virtual User User { get; set; }
         public int? QuestionId { get; set; }

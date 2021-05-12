@@ -7,7 +7,7 @@ namespace LearnFurther.Models
 {
     public class Result
     {
-        public ushort Resultid { get; set; }
+        public short Resultid { get; set; }
         public byte grade { get; set; }
         public int? UserId { get; set; }
         public virtual User User { get; set; }

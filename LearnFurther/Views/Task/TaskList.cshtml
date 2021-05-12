@@ -1,0 +1,10 @@
+﻿@model IEnumerable<LearnFurther.Models.Task>
+
+<form asp-controller="Task">
+    @foreach (var task in Model)
+    {
+        <div class="form-group">
+            <a href="@Url.Action("TaskExecute", "Task", new {id = task.TaskId})" asp-for="Title">@task.Title</a>
+        </div>
+    }
+</form>

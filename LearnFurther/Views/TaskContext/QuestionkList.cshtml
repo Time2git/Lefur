@@ -1,0 +1,25 @@
+﻿@using LearnFurther.ViewModels
+@model AddTaskViewModel
+@{
+    ViewBag.Title = "Список вопросов";
+}
+
+<table class="table">
+    <tr><th>Question</th><th></th></tr>
+    @foreach (var question in Model.Questions)
+    {
+        <tr>
+            <td>@question.Context</td>
+        </tr>
+        @if (question.Answers != null)
+        {
+            @foreach (var answer in question.Answers)
+            {
+                <tr>
+                    <td>@answer.Content</td>
+                    <td>@answer.State</td>
+                </tr>
+            }
+        }
+    }
+</table>

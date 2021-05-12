@@ -10,10 +10,12 @@ namespace LearnFurther.Controllers
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
+        SignInManager<User> _signInManager;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult UserList()
@@ -52,7 +54,7 @@ namespace LearnFurther.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email };
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName};
             return View(model);
         }
 
@@ -92,7 +94,7 @@ namespace LearnFurther.Controllers
             User user = await _userManager.FindByIdAsync(model.Id);
             if (user != null)
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
+                /*IdentityResult result = */await _userManager.DeleteAsync(user);
             }
             return RedirectToAction("UserList");
         }
