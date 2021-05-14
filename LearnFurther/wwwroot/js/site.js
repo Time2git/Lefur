@@ -29,10 +29,10 @@ function addAnswer(val) {
     val.insertAdjacentHTML('beforebegin', str);
 }
 
-function ShowTask(val) {
+function ShowTask() {
     /*alert(val);*/
     /*window.location.href = '@Url.Action("Show", "Task", new { id = ' + val + ' }, null)';*/
-    window.location.href = "@Url.RouteUrl(new { controller = 'Home', action = 'Index'})";
+    //window.location.href = @Url.RouteUrl(new { controller = 'Home', action = 'Index'});
     //$.ajax({
     //    url: '/Task/AddTask',
     //    type: 'GET',

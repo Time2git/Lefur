@@ -4,7 +4,7 @@
     @foreach (var task in Model)
     {
         <div class="form-group">
-            <a href="@Url.Action("TaskExecute", "Task", new {id = task.Id})" asp-for="Title">@task.Title</a>
+            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@task.Id">@task.Title</a>
         </div>
     }
 </form>

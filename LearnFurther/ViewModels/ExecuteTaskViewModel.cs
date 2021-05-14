@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LearnFurther.ViewModels
 {
-    public class ShowTaskViewModel
+    public class ExecuteTaskViewModel
     {
         public short Id { get; set; }
         public string Title { get; set; }

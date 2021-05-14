@@ -19,13 +19,7 @@
             <select asp-for="Types" asp-items="Html.GetEnumSelectList<LearnFurther.ViewModels.TaskTypes>()"></select>
             <br />
         </div>
-        @*<div class="custom-file">
-            <input type="file" class="custom-file-input" id="uploadedFile">
-            <label class="custom-file-label" for="uploadedFile">Выберите файл задания для загрузки</label>
-        </div>*@
         <button class="btn btn-outline-dark mt-3" id="butt" onclick="addInput()" type="button">Добавить вопрос</button>
         <button class="btn btn-outline-dark mt-3" type="submit">Добавить задание</button>
     </div>
 </form>
-@{
-}

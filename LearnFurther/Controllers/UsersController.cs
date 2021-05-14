@@ -94,7 +94,7 @@ namespace LearnFurther.Controllers
             User user = await _userManager.FindByIdAsync(model.Id);
             if (user != null)
             {
-                /*IdentityResult result = */await _userManager.DeleteAsync(user);
+                await _userManager.DeleteAsync(user);
             }
             return RedirectToAction("UserList");
         }

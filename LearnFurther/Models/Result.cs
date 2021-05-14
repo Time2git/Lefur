@@ -7,11 +7,11 @@ namespace LearnFurther.Models
 {
     public class Result
     {
-        public short Resultid { get; set; }
+        public short Id { get; set; }
         public byte grade { get; set; }
-        public int? UserId { get; set; }
-        public virtual User User { get; set; }
-        public int? TaskId { get; set; }
-        public virtual Task Task { get; set; }
+        public int UserId { get; set; }
+        public  User User { get; set; }
+        public short TaskId { get; set; }
+        public  Task Task { get; set; }
     }
 }
