@@ -12,6 +12,6 @@ namespace LearnFurther.Models
         public short TaskId { get; set; }
         public  Task Task { get; set; }
         public  IList<UserAnswer> UserAnswers { get; set; }
-        public  ICollection<Answer> Answers { get; set; }
+        public  IList<Answer> Answers { get; set; }
     }
 }

@@ -70,11 +70,35 @@ namespace LearnFurther.Controllers
         }
 
         [HttpPost]
-        public IActionResult Check(ExecuteTaskViewModel model)
+        public ActionResult Check(ExecuteTaskViewModel model)
         {
-            var task = model;
-            return Ok();
+            int AnswCount = 0;
+            int RightAnswCount = 0;
+            for (int i = 0; i < model.Questions.Count; i++)
+            {
+                for (int j = 0; j < model.Questions[i].Answers.Count; j++)
+                {
+                    AnswCount++;
+                    if(model.Questions[i].Answers[j].State.Equals(model.Questions[i].UserAnswers[j].State))
+                    {
+                        RightAnswCount++;
+                    }
+                }
+            }
+            CheckViewModel model1 = new()
+            {
+                AnswersCount = AnswCount,
+                RightAnswersCount = RightAnswCount
+            };
+            return PartialView(model1);
         }
+
+        public async Task<IActionResult> SaveExecutedTask(ExecuteTaskViewModel model)
+        {
+
+            return RedirectToAction("TaskList");
+        }
+
         public IActionResult TaskEditList()
         {
             if (User.IsInRole("Admin"))
@@ -87,6 +111,7 @@ namespace LearnFurther.Controllers
             }
             return Ok();
         }
+
         [HttpGet]
         public async Task<IActionResult> EditAsync(short id)
         {
@@ -97,6 +122,25 @@ namespace LearnFurther.Controllers
             }
             EditTaskViewModel model = new EditTaskViewModel {Id = task.Id, Title = task.Title, Description = task.Description, Questions = task.Questions};
             return View("EditTask",model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAsync(EditTaskViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Models.Task task = await db.Tasks.FindAsync(model.Id);
+                if (task != null)
+                {
+                    task.Title = model.Title;
+                    task.Description = model.Description;
+                    task.Questions = model.Questions;
+                    db.Tasks.Update(task);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("TaskEditList");
+                }
+            }
+            return View("EditTask", model);
         }
 
         [HttpPost]

@@ -84,3 +84,4 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\AddTask.csh
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Execute.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\EditTask.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskEditList.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Check.cshtml.g.cs
