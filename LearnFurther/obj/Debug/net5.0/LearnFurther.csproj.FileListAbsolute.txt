@@ -79,9 +79,9 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\Create.csh
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\Edit.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Users\UserList.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskList.cshtml.g.cs
-D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\TaskContext\QuestionkList.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\AddTask.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Execute.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\EditTask.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskEditList.cshtml.g.cs
-D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\Check.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TestExecute.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskListModal.cshtml.g.cs

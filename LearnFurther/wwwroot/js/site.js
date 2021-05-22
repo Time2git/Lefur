@@ -28,15 +28,3 @@ function addAnswer(val) {
     var str = '<div class="form-check col-sm-4"><input class="form-check-input" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control ml-2 mb-2" name = Questions[' + listId + '].Answers[' + x +'].Content></div >'
     val.insertAdjacentHTML('beforebegin', str);
 }
-
-function ShowTask() {
-    /*alert(val);*/
-    /*window.location.href = '@Url.Action("Show", "Task", new { id = ' + val + ' }, null)';*/
-    //window.location.href = @Url.RouteUrl(new { controller = 'Home', action = 'Index'});
-    //$.ajax({
-    //    url: '/Task/AddTask',
-    //    type: 'GET',
-    //    data: {},
-    //    success: null
-    //})
-}

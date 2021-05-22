@@ -36,12 +36,13 @@ namespace LearnFurther.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public async Task<IActionResult> AddTask(AddTaskViewModel model)
         {
-            Models.Task task = new Models.Task
+            Models.Task task = new ()
             {
                 Title = model.Title,
                 Description = model.Description,
                 Questions = model.Questions,
-                Author = await _userManager.GetUserAsync(HttpContext.User)
+                Author = await _userManager.GetUserAsync(HttpContext.User),
+                Types = (Models.TaskTypes)model.Types
             };
             db.Tasks.Add(task);
             await db.SaveChangesAsync();
@@ -58,6 +59,19 @@ namespace LearnFurther.Controllers
         {
             var task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers)
                 .Include(s => s.Questions).ThenInclude(a => a.UserAnswers).FirstOrDefaultAsync(u => u.Id == id);
+            if (task.Types == Models.TaskTypes.TaskWithFullSolution)
+            {
+                if (HttpContext.User.Identity.Name == null)
+                {
+                    var isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+                    if (isAjax)
+                    {
+                        return PartialView("TaskListModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
+                    }
+                    return View("TaskListModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
+                }
+                var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            } 
             ExecuteTaskViewModel model = new()
             {
                 Id = task.Id,
@@ -70,33 +84,18 @@ namespace LearnFurther.Controllers
         }
 
         [HttpPost]
-        public ActionResult Check(ExecuteTaskViewModel model)
+        public IActionResult TestExecute(ExecuteTaskViewModel model)
         {
-            int AnswCount = 0;
-            int RightAnswCount = 0;
-            for (int i = 0; i < model.Questions.Count; i++)
-            {
-                for (int j = 0; j < model.Questions[i].Answers.Count; j++)
-                {
-                    AnswCount++;
-                    if(model.Questions[i].Answers[j].State.Equals(model.Questions[i].UserAnswers[j].State))
-                    {
-                        RightAnswCount++;
-                    }
-                }
-            }
-            CheckViewModel model1 = new()
-            {
-                AnswersCount = AnswCount,
-                RightAnswersCount = RightAnswCount
-            };
+            Check check = new ();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
+            CheckViewModel model1 = check.CheckTestTask(model);
             return PartialView(model1);
         }
 
-        public async Task<IActionResult> SaveExecutedTask(ExecuteTaskViewModel model)
+        public async Task<IActionResult> SaveExecutedTestTask(ExecuteTaskViewModel model)
         {
-
-            return RedirectToAction("TaskList");
+            Check check = new();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
+            var model1 = check.CheckTestTask(model);
+            return Ok();
         }
 
         public IActionResult TaskEditList()
@@ -120,7 +119,7 @@ namespace LearnFurther.Controllers
             {
                 return NotFound();
             }
-            EditTaskViewModel model = new EditTaskViewModel {Id = task.Id, Title = task.Title, Description = task.Description, Questions = task.Questions};
+            EditTaskViewModel model = new () {Id = task.Id, Title = task.Title, Description = task.Description, Questions = task.Questions};
             return View("EditTask",model);
         }
 

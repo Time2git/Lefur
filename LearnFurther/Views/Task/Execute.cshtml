@@ -2,7 +2,7 @@
 @model ExecuteTaskViewModel
 
 <div>
-    <form asp-controller="Task" asp-action="Check" id="cartForm">
+    <form asp-controller="Task" asp-action="TestExecute" id="cartForm" style="max-height:600px">
         <input type="hidden" asp-for="Id" />
         <div class="form-group">
             <label asp-for="Title"></label>
@@ -13,7 +13,7 @@
             <textarea class="form-control" asp-for="Description" rows="3" style="resize:none"></textarea>
         </div>
         <input type="hidden" asp-for="TestPerson" value="@User.Identity" />
-        @for (int i = 0; i < Model.Questions.Count; i++)@*@foreach(var question in Model.Questions)*@
+        @for (int i = 0; i < Model.Questions.Count; i++)
         {
             int iterator = i + 1;
             <div class="d-flex row">
@@ -26,11 +26,8 @@
                 @foreach (var answer in Model.Questions[i].Answers)
                 {
                     <div class="form-check">
-                        @*Model.Questions[@i].UserAnswers[@x].User = @Model.TestPerson;*@
                         <input class="form-check-input" id="Questions[@i].UserAnswers[@x].State" type="checkbox" value="true" name="Questions[@i].UserAnswers[@x].State" />
                         <input type="hidden" value="false" name="Questions[@i].UserAnswers[@x].State" />
-
-                        <!--<input class="form-check-input" type="checkbox"--> @*id="Questions_'+@i+'__UserAnswers_'+@x+'__State"*@ <!--id="Questions[@i].UserAnswers[@x].State" name="Questions[@i].UserAnswers[@x].State" />-->
                         <input class="form-control ml-2 mb-2" asp-for="Questions[i].Answers[x].Content" />
                     </div>
                     x++;
@@ -44,8 +41,7 @@
     </div>
 </div>
 
-@section scripts
-{
+@section scripts {
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -62,17 +58,3 @@
 
     </script>
 }
-@*@section scripts
-    {
-        <script type="text/javascript">
-            $(function () {
-                $.ajaxSetup({ cache: false });
-                $(".button").click(function (e) {
-                    $.get("@Url.Action("Check")", function (data) {
-                        $('#dialogContent').html(data);
-                        $('#myModal').modal('show');
-                    });
-                });
-            })
-        </script>
-    }*@

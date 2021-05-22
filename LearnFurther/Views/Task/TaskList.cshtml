@@ -1,10 +1,49 @@
 ﻿@model IEnumerable<LearnFurther.Models.Task>
 
-<form asp-controller="Task">
-    @foreach (var task in Model)
-    {
-        <div class="form-group">
-            <a href="@Url.Action("TaskExecute", "Task", new {id = task.Id})" asp-for="Title">@task.Title</a>
-        </div>
-    }
-</form>
+<div>
+    <form asp-controller="Task">
+        @foreach (var task in Model)
+        {
+            <div class="form-group">
+                <button class="btn btn-outline-dark mt-3" type="button" id="@task.Id" asp-controller="Task" asp-action="TaskExecute" asp-route-id="@task.Id">@task.Title</button>
+            </div>
+        }
+    </form>
+    <div id="modDialog" class="modal fade">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+
+    $(document).ready(function () { //я рот наоборот, это такой быдлокод для проверки/переадрессации; надо бы ещё допилить возвращение на предыдущую юрлу для метода в TaskController, чтобы всякие хитрые туда не стучались
+        $("button").click(function () {
+            alert("something");
+            var data = $(this).attr("id");
+            var url = $(this).attr("formaction");
+            alert(data);
+            alert(url);
+            $.get(url, function (data) {
+                let key = "myBtn";
+                let state;
+                alert("Ответ пришёл с TaskExecute");
+                alert(typeof data);
+                alert(data);
+                state = data.indexOf(key);
+                if (state != -1) {
+                    alert("Молвит что содержит");
+                    alert(state);
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                }
+                else {
+                    alert("Вроде как не содержит");
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+
+    </script>
+}
