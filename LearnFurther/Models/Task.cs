@@ -20,5 +20,6 @@ namespace LearnFurther.Models
         public TaskTypes Types { get; set; }
         public int UserId { get; set; }
         public User Author { get; set; }
+        public IList<UsersWithAccessToTheTask> Users { get; set; }
     }
 }

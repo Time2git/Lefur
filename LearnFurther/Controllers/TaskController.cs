@@ -53,12 +53,19 @@ namespace LearnFurther.Controllers
         {
             return View("TaskList", db.Tasks.ToList());
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> TaskExecuteAsync(short id)
         {
             var task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers)
-                .Include(s => s.Questions).ThenInclude(a => a.UserAnswers).FirstOrDefaultAsync(u => u.Id == id);
+                .Include(s => s.Questions).ThenInclude(a => a.UserAnswers).Include(q => q.Users).FirstOrDefaultAsync(u => u.Id == id);
+            //UsersWithAccessToTheTask usersWith = new()//добавил чтобы чисто проверить код ниже
+            //{
+            //    TaskId = task.Id,
+            //    User = await _userManager.GetUserAsync(HttpContext.User)
+            //};
+            //db.UsersWithAccesses.Add(usersWith);
+            //await db.SaveChangesAsync();//код между этим и верхним комментом удалить после отладки
             if (task.Types == Models.TaskTypes.TaskWithFullSolution)
             {
                 if (HttpContext.User.Identity.Name == null)
@@ -66,11 +73,36 @@ namespace LearnFurther.Controllers
                     var isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
                     if (isAjax)
                     {
-                        return PartialView("TaskListModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
+                        return PartialView("UserNotAuthenticateModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
                     }
-                    return View("TaskListModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
+                    return View("UserNotAuthenticateModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
                 }
-                var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                else
+                {//здесь бы добавить проверку, что пытается создаль задания его выполнять
+                    var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                    var exist = task.Users.Where(p => p.Id == task.Id).FirstOrDefault(e => e.User == user);
+                    if (exist != null)
+                    {
+                        ExecuteTaskViewModel model1 = new()
+                        {
+                            Id = task.Id,
+                            Title = task.Title,
+                            Description = task.Description,
+                            Questions = task.Questions,
+                            TestPerson = await _userManager.GetUserAsync(HttpContext.User)
+                        };
+                        return View("Execute", model1);
+                    }
+                    else
+                    {
+                        var isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+                        if (isAjax)
+                        {
+                            return PartialView("UserHavenAcces'tModal", "У вас отсутствует доступ к данному заданию.");
+                        }
+                        return View("UserHavenAcces'tModal", "У вас отсутствует доступ к данному заданию.");
+                    }
+                }
             } 
             ExecuteTaskViewModel model = new()
             {
