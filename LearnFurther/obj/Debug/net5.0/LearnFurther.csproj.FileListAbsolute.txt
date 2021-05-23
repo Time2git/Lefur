@@ -86,3 +86,4 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TaskEditLis
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TestExecute.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserHavenAcces'tModal.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserNotAuthenticateModal.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserAlreadyRequestAccessToTheTaskModal.cshtml.g.cs

@@ -96,11 +96,17 @@ namespace LearnFurther.Controllers
                     else
                     {
                         var isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+                        RequestAccessToTaskViewModel model2 = new()
+                        {
+                            TaskId = task.Id,
+                            TestPerson = user.UserName,
+                            Context = "У вас отсутствует доступ к данному заданию."
+                        };
                         if (isAjax)
                         {
-                            return PartialView("UserHavenAcces'tModal", "У вас отсутствует доступ к данному заданию.");
+                            return PartialView("UserHavenAcces'tModal", model2);
                         }
-                        return View("UserHavenAcces'tModal", "У вас отсутствует доступ к данному заданию.");
+                        return View("UserHavenAcces'tModal", model2);
                     }
                 }
             } 
@@ -130,6 +136,27 @@ namespace LearnFurther.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult AddUserToWaitingList(RequestAccessToTaskViewModel model)
+        {
+            var user = db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == model.TaskId).FirstOrDefault(p => p.User.UserName == model.TestPerson);
+            if (user != null)
+            {
+                return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Пожалуйста, подождите ответа от составителя задания");
+            }
+            else
+            {
+                User userr = db.Users.FirstOrDefault(u => u.UserName == model.TestPerson);
+                ListOfUsersRequestingAccess listOf = new()
+                {
+                    TaskId = model.TaskId,
+                    User = userr
+                };
+                db.ListOfUsersRequestingAccesses.Add(listOf);
+                db.SaveChangesAsync();
+            }
+            return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Запрос на доступ к заданию отправлен составителю.");
+        }
         public IActionResult TaskEditList()
         {
             if (User.IsInRole("Admin"))
