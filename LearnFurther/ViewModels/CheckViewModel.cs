@@ -9,5 +9,6 @@ namespace LearnFurther.ViewModels
     {
        public int AnswersCount { get; set; }
        public int RightAnswersCount { get; set; }
+       public byte Grade { get; set; }
     }
 }

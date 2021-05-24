@@ -89,7 +89,7 @@ namespace LearnFurther.Controllers
                             Title = task.Title,
                             Description = task.Description,
                             Questions = task.Questions,
-                            TestPerson = await _userManager.GetUserAsync(HttpContext.User)
+                            TestPerson = HttpContext.User.Identity.Name
                         };
                         return View("Execute", model1);
                     }
@@ -116,23 +116,39 @@ namespace LearnFurther.Controllers
                 Title = task.Title,
                 Description = task.Description,
                 Questions = task.Questions,
-                TestPerson = await _userManager.GetUserAsync(HttpContext.User)
+                TestPerson = HttpContext.User.Identity.Name
             };
             return View("Execute", model);
         }
 
         [HttpPost]
-        public IActionResult TestExecute(ExecuteTaskViewModel model)
+        public async Task<IActionResult> TestExecuteAsync(ExecuteTaskViewModel model)
         {
-            Check check = new ();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
-            CheckViewModel model1 = check.CheckTestTask(model);
-            return PartialView(model1);
+            Check check = new();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
+            Models.Task task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers).FirstOrDefaultAsync(u => u.Id == model.Id);
+            CheckViewModel model1 = check.CheckTestTask(model, task);
+            return PartialView("TestExecute",model1);
         }
 
         public async Task<IActionResult> SaveExecutedTestTask(ExecuteTaskViewModel model)
         {
             Check check = new();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
-            var model1 = check.CheckTestTask(model);
+            Models.Task task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers).FirstOrDefaultAsync(u => u.Id == model.Id);
+            CheckViewModel model1 = check.CheckTestTask(model, task);
+            Models.User user = db.Users.FirstOrDefault(s => s.UserName == model.TestPerson);
+            User user1 = await _userManager.FindByNameAsync(model.TestPerson);
+            Result result = new()
+            {
+                Grade = model1.Grade,
+                Task = task,
+                User = user1
+            };
+            if ((db.Results.Where(u => u.Task == task).FirstOrDefault(p => p.User == user)) != null)
+            {
+                db.Results.Update(result);
+            }
+            await db.Results.AddAsync(result);
+            await db.SaveChangesAsync();
             return Ok();
         }
 

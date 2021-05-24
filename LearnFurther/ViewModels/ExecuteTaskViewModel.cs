@@ -10,6 +10,6 @@ namespace LearnFurther.ViewModels
         public string Description { get; set; }
         public IList<Question> Questions { get; set; }
         public ICollection<Result> Results { get; set; }
-        public User TestPerson { get; set; }
+        public string TestPerson { get; set; }
     }
 }

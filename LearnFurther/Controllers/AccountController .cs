@@ -41,7 +41,7 @@ namespace LearnFurther.Controllers
                 {
                     // установка куки
                     await _userManager.AddToRoleAsync(user, UserRole);
-                    await _signInManager.SignInAsync(user, false);
+                    await _signInManager.SignInAsync(user, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else

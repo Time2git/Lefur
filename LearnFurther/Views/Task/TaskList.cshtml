@@ -19,26 +19,26 @@
 
     $(document).ready(function () { //я рот наоборот, это такой быдлокод для проверки/переадрессации; надо бы ещё допилить возвращение на предыдущую юрлу для метода в TaskController, чтобы всякие хитрые туда не стучались
         $("button").click(function () {
-            alert("something");
+            /*alert("something");*/
             var data = $(this).attr("id");
             var url = $(this).attr("formaction");
-            alert(data);
-            alert(url);
+            //alert(data);
+            //alert(url);
             $.get(url, function (data) {
                 let key = "myBtn";
                 let state;
-                alert("Ответ пришёл с TaskExecute");
-                alert(typeof data);
-                alert(data);
+                //alert("Ответ пришёл с TaskExecute");
+                //alert(typeof data);
+                //alert(data);
                 state = data.indexOf(key);
                 if (state != -1) {
-                    alert("Молвит что содержит");
-                    alert(state);
+                    //alert("Молвит что содержит");
+                    //alert(state);
                     $('#dialogContent').html(data);
                     $('#modDialog').modal('show');
                 }
                 else {
-                    alert("Вроде как не содержит");
+                    /*alert("Вроде как не содержит");*/
                     window.location.href = url;
                 }
             });

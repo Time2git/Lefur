@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using LearnFurther.Models;
 using Microsoft.AspNetCore.Identity;
@@ -29,14 +30,13 @@ namespace LearnFurther
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
+            services.ConfigureApplicationCookie(options => 
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+
+            });
 
             services.AddControllersWithViews();
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

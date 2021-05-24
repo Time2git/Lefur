@@ -12,7 +12,7 @@
             <label class="form-label" asp-for="Description"></label>
             <textarea class="form-control" asp-for="Description" rows="3" style="resize:none"></textarea>
         </div>
-        <input type="hidden" asp-for="TestPerson" value="@User.Identity" />
+        <input type="hidden" asp-for="TestPerson" value="@User.Identity.Name" />
         @for (int i = 0; i < Model.Questions.Count; i++)
         {
             int iterator = i + 1;
