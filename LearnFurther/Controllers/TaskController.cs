@@ -80,7 +80,7 @@ namespace LearnFurther.Controllers
                 else
                 {//здесь бы добавить проверку, что пытается создаль задания его выполнять
                     var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-                    var exist = task.Users.Where(p => p.Id == task.Id).FirstOrDefault(e => e.User == user);
+                    var exist = task.Users.Where(p => p.TaskId == task.Id).FirstOrDefault(e => e.User == user);
                     if (exist != null)
                     {
                         ExecuteTaskViewModel model1 = new()
@@ -155,7 +155,7 @@ namespace LearnFurther.Controllers
         [HttpPost]
         public IActionResult AddUserToWaitingList(RequestAccessToTaskViewModel model)
         {
-            var user = db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == model.TaskId).FirstOrDefault(p => p.User.UserName == model.TestPerson);
+            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == model.TaskId).FirstOrDefault(p => p.User.UserName == model.TestPerson);
             if (user != null)
             {
                 return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Пожалуйста, подождите ответа от составителя задания");
@@ -163,15 +163,43 @@ namespace LearnFurther.Controllers
             else
             {
                 User userr = db.Users.FirstOrDefault(u => u.UserName == model.TestPerson);
+                var task = db.Tasks.FirstOrDefault(a => a.Id == model.TaskId);
                 ListOfUsersRequestingAccess listOf = new()
                 {
                     TaskId = model.TaskId,
+                    Task = task,
                     User = userr
                 };
                 db.ListOfUsersRequestingAccesses.Add(listOf);
                 db.SaveChangesAsync();
             }
             return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Запрос на доступ к заданию отправлен составителю.");
+        }
+
+        public IActionResult ShowUserWaitingList()
+        {
+            var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
+            var task = db.Tasks.Where(s => s.Author == user);
+            var list = db.ListOfUsersRequestingAccesses.Include(p => p.Task).Include(s => s.User).ToList();
+            var l = list.Where(s => s.Task.Author == user);
+            //ListOfUsersRequestingAccess list = await db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == task[1].Where(s => s.Author == user));
+            //var list = db.ListOfUsersRequestingAccesses.FirstOrDefault());
+            return View(l);
+        }
+
+        [HttpPost]
+        public IActionResult ShowUserWaitingList(short id)
+        {
+            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
+            UsersWithAccessToTheTask withAccess = new()
+            {
+                TaskId = user.TaskId,
+                User = user.User,
+            };
+            db.UsersWithAccesses.Add(withAccess);
+            db.ListOfUsersRequestingAccesses.Remove(user);
+            db.SaveChanges();
+            return Ok();
         }
         public IActionResult TaskEditList()
         {

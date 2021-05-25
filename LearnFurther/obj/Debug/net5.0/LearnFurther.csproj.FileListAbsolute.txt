@@ -93,3 +93,4 @@ D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPassword.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ResetPassword.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\ShowUserWaitingList.cshtml.g.cs
