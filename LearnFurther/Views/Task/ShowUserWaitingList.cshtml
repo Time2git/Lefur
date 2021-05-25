@@ -3,19 +3,32 @@
     ViewBag.Title = "Список пользователей запросивших доступ к заданию";
 }
 
-<table class="table">
+<table class="table" id="tabl">
     <tr><th>Задание</th><th>Пользователь запросивший доступ</th><th></th></tr>
-    @foreach (var user in Model)
+    @foreach (var elem in Model)
     {
         <tr>
-            <td>@user.Task.Title</td>
-            <td>@user.User.UserName</td>
+            <td>@elem.Task.Title</td>
+            <td>@elem.User.UserName</td>
             <td>
                 <form method="post">
-                    <button type="submit" class="btn btn-sm btn-primary" asp-action="ShowUserWaitingList" asp-route-id="@user.Id">Разрешить доступ</button>
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Отказать в доступе</a>
+                    <button type="submit" class="btn btn-sm btn-primary" asp-action="ShowUserWaitingList" asp-route-id="@elem.Id" id="myBtn" >Разрешить доступ</button>
+                    <button type="submit" class="btn btn-sm btn-primary" asp-action="AccessDenied" asp-route-id="@elem.Id">Отказать в доступе</button>
                 </form>
             </td>
         </tr>
     }
 </table>
+
+@*@section scripts {
+    <script type="text/javascript">
+
+            function send(val) {//скрипт работает, но не вижу в нем особого смысла пока,что
+                var url = $(val).attr("formaction");
+                $.post(url, function (data) {
+                    alert("пришёл ответ");
+                    $('head').html(data);
+                });
+            };
+    </script>
+}*@

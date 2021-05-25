@@ -127,7 +127,7 @@ namespace LearnFurther.Controllers
             Check check = new();//Необходимо уменьшить связность, а именно заменить new, допустим, на использование в виде сервиса при помощи Di
             Models.Task task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers).FirstOrDefaultAsync(u => u.Id == model.Id);
             CheckViewModel model1 = check.CheckTestTask(model, task);
-            return PartialView("TestExecute",model1);
+            return PartialView("TestExecutionComplete", model1);
         }
 
         public async Task<IActionResult> SaveExecutedTestTask(ExecuteTaskViewModel model)
@@ -188,7 +188,7 @@ namespace LearnFurther.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowUserWaitingList(short id)
+        public async Task<IActionResult> ShowUserWaitingListAsync(short id)
         {
             ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
             UsersWithAccessToTheTask withAccess = new()
@@ -196,10 +196,19 @@ namespace LearnFurther.Controllers
                 TaskId = user.TaskId,
                 User = user.User,
             };
-            db.UsersWithAccesses.Add(withAccess);
+            await db.UsersWithAccesses.AddAsync(withAccess);
             db.ListOfUsersRequestingAccesses.Remove(user);
-            db.SaveChanges();
-            return Ok();
+            await db.SaveChangesAsync();
+            return RedirectToAction("ShowUserWaitingList");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AccessDeniedAsync(short id)
+        {
+            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
+            db.ListOfUsersRequestingAccesses.Remove(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("ShowUserWaitingList");
         }
         public IActionResult TaskEditList()
         {

@@ -8,7 +8,7 @@
         @Model
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="myBtn">Авторизоваться</button>
-        <button type="button" class="btn btn-primary" id="myBtn">Зарегистрироваться</button>
+        <a type="submit" asp-controller="Account" asp-action="Login" class="btn btn-primary" id="myBtn" formmethod="get">Авторизоваться</a>
+        <a type="button" asp-controller="Account" asp-action="Register" class="btn btn-primary" id="myBtn" formmethod="get">Зарегистрироваться</a>
     </div>
 </div>

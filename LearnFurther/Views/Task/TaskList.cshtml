@@ -5,7 +5,7 @@
         @foreach (var task in Model)
         {
             <div class="form-group">
-                <button class="btn btn-outline-dark mt-3" type="button" id="@task.Id" asp-controller="Task" asp-action="TaskExecute" asp-route-id="@task.Id">@task.Title</button>
+                <button class="btn btn-outline-dark mt-3" type="button" id="@task.Id" asp-controller="Task" asp-action="TaskExecute" asp-route-id="@task.Id" onclick="send(this)">@task.Title</button>
             </div>
         }
     </form>
@@ -17,11 +17,11 @@
 @section scripts {
     <script type="text/javascript">
 
-    $(document).ready(function () { //я рот наоборот, это такой быдлокод для проверки/переадрессации; надо бы ещё допилить возвращение на предыдущую юрлу для метода в TaskController, чтобы всякие хитрые туда не стучались
-        $("button").click(function () {
+    /*$(document).ready(function () { //я рот наоборот, это такой быдлокод для проверки/переадрессации; надо бы ещё допилить возвращение на предыдущую юрлу для метода в TaskController, чтобы всякие хитрые туда не стучались*/
+        /*$("button").click(function () */function send(val){
             /*alert("something");*/
-            var data = $(this).attr("id");
-            var url = $(this).attr("formaction");
+            /*var data = $(val).attr("id");*/
+            var url = $(val).attr("formaction");
             //alert(data);
             //alert(url);
             $.get(url, function (data) {
@@ -42,8 +42,7 @@
                     window.location.href = url;
                 }
             });
-        });
-    });
-
+        };
+    /*});*/
     </script>
 }
