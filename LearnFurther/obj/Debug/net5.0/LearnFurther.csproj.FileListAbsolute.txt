@@ -87,3 +87,9 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TestExecute
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserHavenAcces'tModal.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserNotAuthenticateModal.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\UserAlreadyRequestAccessToTheTaskModal.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\MailKit.dll
+D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\MimeKit.dll
+D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ResetPassword.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs

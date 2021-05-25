@@ -3,26 +3,26 @@
 <form method="post" asp-controller="Account" asp-action="Login"
       asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>
-    <div class="d-inline-flex justify-content-around flex-row">
+    <div class="d-flex justify-content-around flex-row">
         <label class="form-label align-items-center mt-1" asp-for="Email"></label><br />
         <input class="form-control ml-4 mb-2" asp-for="Email">
         <span asp-validation-for="Email"></span>
     </div>
-    <div class="d-inline-flex justify-content-around flex-row">
+    <div class="d-flex justify-content-around flex-row">
         <label class="form-label align-items-center mt-1" asp-for="Password"></label><br />
         <input class="form-control ml-2 mb-2" asp-for="Password">
         <span asp-validation-for="Password"></span>
     </div>
-    <div class="d-inline-flex flex-row">
+    <div class="d-flex flex-row">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" asp-for="RememberMe">
             <label class="form-label" asp-for="RememberMe">
             </label><br />
         </div>
     </div>
-    <div class="d-inline-flex justify-content-center">
+    <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-outline-dark mb-2 mr-auto col-2 ml-auto p-1">Войти</button>
-        <button type="submit" class="btn btn-outline-dark mb-2 mr-auto ml-sm-auto ml-2 p-1">Восстановить учетную запись</button>
+        <a href="ForgotPassword">Забыли пароль?</a>
     </div>
 </form>
 @{
