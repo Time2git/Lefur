@@ -15,27 +15,28 @@
             <textarea class="form-control" asp-for="Description" rows="3" style="resize:none"></textarea>
             <span asp-validation-for="Description"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group row col-md-4 ml-auto mr-auto mb-0">
             <label asp-for="Types">Выберите тип задания</label><br />
-            <select asp-for="Types" asp-items="Html.GetEnumSelectList<LearnFurther.ViewModels.TaskTypes>()" onchange="Change(this)"></select>
+            <select asp-for="Types" id="type" asp-items="Html.GetEnumSelectList<LearnFurther.ViewModels.TaskTypes>()" onchange="Change(this)"></select>
             <br />
         </div>
-        <button class="btn btn-outline-dark mt-3 mb-3" id="butt" onclick="addInput()" type="button">Добавить вопрос</button>
-        <button class="btn btn-outline-dark mt-3 mb-3" type="submit">Добавить задание</button>
+        <div>
+            <button class="btn btn-outline-dark mt-3 mb-3" id="butt" onclick="addInput()" type="button">Добавить вопрос</button>
+            <button class="btn btn-outline-dark mt-3 mb-3" type="submit">Добавить задание</button>
+        </div>
     </div>
 </form>
 <div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
                 При смене типа задания на задание с полным ответом, варианты ответов будут удалены.
             </div>
             <div class="modal-footer">
-                <a type="submit" asp-controller="Account" asp-action="Login" class="btn btn-primary" id="myBtn" formmethod="get">Авторизоваться</a>
-                <a type="button" asp-controller="Account" asp-action="Register" class="btn btn-primary">Зарегистрироваться</a>
+                <button type="button" class="btn btn-primary" onclick="DelAnswers()">Сменить тип задания</button>
+                <button type="button" class="btn btn-primary" onclick="NotChange()">Не менять</button>
             </div>
         </div>
     </div>
@@ -46,22 +47,62 @@
 
 <script>
 
+    function NotChange() {
+        var s = document.getElementById("type");
+        s.value = 0;
+        $('#modDialog').modal('hide');
+    }
+
     function Change(val) {
         if ((val.options[val.selectedIndex].text == "Задание с полным ответом") && (arr.size != 0)) {
             $('#modDialog').modal('show');
         };
-    }
+        if (val.options[val.selectedIndex].text != "Задание с полным ответом") {
+            for (var j = 0; j < i; j++) {
+                var l = document.getElementById(j);
+                if (document.getElementById('button' + j + '') == null) {
+                    var str = '<button class="btn btn-outline-dark col-4 align-content-center" id="button' + j + '" onclick="addAnswer(this)" type="button">Добавить ответ</button></div >'
+                    l.insertAdjacentHTML('beforeend', str);
+                }
+            }
+        }
+    };
+
+    function DelAnswers() {
+        for (var j = 0; j < i; j++) {
+            var list = document.getElementById(j).id;
+            if (arr.has(list)) {
+                var x = arr.get(list);
+                while (x >= 0) {
+                    var del = document.getElementById('Questions[' + list + '].Answers[' + x + ']');
+                    del.remove();
+                    x--;
+                    arr.set(list, x);
+                };
+            };
+            var a = document.getElementById("button"+ j +"");
+            a.remove();
+        };
+        $('#modDialog').modal('hide');
+    };
 
     var i = 0;
     var arr = new Map();
 
 
     function addInput() {
-        var str = '<div class="d-flex justify-content-around row" id = ' + i + '><textarea class="form-control mt-2 mb-3 ml-3 mr-3" name = "Questions[' + i + '].Context" rows="1" style="resize:none"></textarea><button class="btn btn-outline-dark col-4 align-content-center" id="button' + i + '" onclick="addAnswer(this)" type="button">Добавить ответ</button></div>'
-
-        butt.insertAdjacentHTML('beforebegin', str);
-        i++;
-    }
+        let val = document.getElementById("type");
+        if (val.options[val.selectedIndex].text != "Задание с полным ответом") {
+            var str = '<div class="d-flex justify-content-around row" id = ' + i + '><textarea class="form-control mt-2 mb-3 ml-3 mr-3" name = "Questions[' + i + '].Context" rows="1" style="resize:none"></textarea><button class="btn btn-outline-dark col-4 align-content-center" id="button' + i + '" onclick="addAnswer(this)" type="button">Добавить ответ</button></div>'
+            butt.insertAdjacentHTML('beforebegin', str);
+            i++;
+        }
+        else {
+            var str = '<div class="d-flex justify-content-around row" id = ' + i + '><textarea class="form-control mt-2 mb-3 ml-3 mr-3" name = "Questions[' + i + '].Context" rows="1" style="resize:none"></textarea></div>'
+            butt.insertAdjacentHTML('beforebegin', str);
+            i++;
+        };
+    };
 
     function addAnswer(val) {
         let x;
@@ -75,10 +116,11 @@
         else {
             x = 0;
             arr.set(listId, x)
+            /*alert(listId);*/
         }
-        var str = '<div class="form-check col-sm-4"><input class="form-check-input" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control ml-2 mb-2" name = Questions[' + listId + '].Answers[' + x + '].Content></div >'
+        var str = '<div class="form-check row col-4 mr-auto mb-0 pl-1 ml-3" id = Questions[' + listId + '].Answers[' + x + ']><input class="form-check-input ml-0" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control mb-2 ml-3 pr-0" name = Questions[' + listId + '].Answers[' + x + '].Content></div >'
         val.insertAdjacentHTML('beforebegin', str);
-    }
+    };
 
 </script>
 
