@@ -15,14 +15,14 @@
             <textarea class="form-control" asp-for="Description" rows="3" style="resize:none"></textarea>
             <span asp-validation-for="Description"></span>
         </div>
-        <div class="form-group row col-md-4 ml-auto mr-auto mb-0">
-            <label asp-for="Types">Выберите тип задания</label><br />
-            <select asp-for="Types" id="type" asp-items="Html.GetEnumSelectList<LearnFurther.ViewModels.TaskTypes>()" onchange="Change(this)"></select>
+        <div class="form-group row col-md-4 ml-md-auto mr-md-auto mb-0">
+            <label asp-for="Types" class="ml-auto mr-auto">Выберите тип задания</label>
+            <select asp-for="Types" class="ml-auto mr-auto" id="type" asp-items="Html.GetEnumSelectList<LearnFurther.ViewModels.TaskTypes>()" onchange="Change(this)"></select>
             <br />
         </div>
-        <div>
-            <button class="btn btn-outline-dark mt-3 mb-3" id="butt" onclick="addInput()" type="button">Добавить вопрос</button>
-            <button class="btn btn-outline-dark mt-3 mb-3" type="submit">Добавить задание</button>
+        <div id="butt" class="row">
+            <button class="btn btn-outline-dark mt-3 mb-3 offset-md-3" onclick="addInput()" type="button">Добавить вопрос</button>
+            <button class="btn btn-outline-dark mt-3 mb-3 offset-md-1" type="submit">Добавить задание</button>
         </div>
     </div>
 </form>
@@ -118,7 +118,7 @@
             arr.set(listId, x)
             /*alert(listId);*/
         }
-        var str = '<div class="form-check row col-4 mr-auto mb-0 pl-1 ml-3" id = Questions[' + listId + '].Answers[' + x + ']><input class="form-check-input ml-0" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control mb-2 ml-3 pr-0" name = Questions[' + listId + '].Answers[' + x + '].Content></div >'
+        var str = '<div class="form-check row col-3 mr-auto mb-0 pl-1 ml-3 pr-2" id = Questions[' + listId + '].Answers[' + x + ']><input class="form-check-input ml-0" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control mb-2 ml-4 pr-0" name = Questions[' + listId + '].Answers[' + x + '].Content></div >'
         val.insertAdjacentHTML('beforebegin', str);
     };
 

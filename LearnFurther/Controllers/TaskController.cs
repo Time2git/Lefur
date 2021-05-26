@@ -91,7 +91,7 @@ namespace LearnFurther.Controllers
                             Questions = task.Questions,
                             TestPerson = HttpContext.User.Identity.Name
                         };
-                        return View("Execute", model1);
+                        return View("ExecuteTaskWithFullSolution", model1);
                     }
                     else
                     {
@@ -181,7 +181,7 @@ namespace LearnFurther.Controllers
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             var task = db.Tasks.Where(s => s.Author == user);
             var list = db.ListOfUsersRequestingAccesses.Include(p => p.Task).Include(s => s.User).ToList();
-            var l = list.Where(s => s.Task.Author == user);
+            var l = list.Where(s => s.Task.Author == user).ToList();
             //ListOfUsersRequestingAccess list = await db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == task[1].Where(s => s.Author == user));
             //var list = db.ListOfUsersRequestingAccesses.FirstOrDefault());
             return View(l);

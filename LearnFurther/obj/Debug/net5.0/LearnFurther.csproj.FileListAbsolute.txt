@@ -94,3 +94,4 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ResetPas
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\ShowUserWaitingList.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TestExecutionComplete.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\ExecuteTaskWithFullSolution.cshtml.g.cs

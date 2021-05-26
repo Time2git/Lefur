@@ -8,7 +8,7 @@ namespace LearnFurther.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<Task> Tasks { get; set; }
-        public List<UsersWithAccessToTheTask> Users { get; set; }
+        public IList<UsersWithAccessToTheTask> Users { get; set; }
         //public int? RoleId { get; set; }
         //public virtual Role Role { get; set; }
         //public virtual ICollection<Result> Results { get; set; }

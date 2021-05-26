@@ -1,0 +1,36 @@
+﻿@using LearnFurther.ViewModels
+@model ExecuteTaskViewModel
+
+<div>
+    <form asp-controller="Task" asp-action="TestExecute" id="cartForm" style="max-height:600px">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input class="form-control" asp-for="Title" />
+        </div>
+        <div class="form-group">
+            <label class="form-label" asp-for="Description"></label>
+            <textarea class="form-control" asp-for="Description" rows="3" style="resize:none"></textarea>
+        </div>
+        <input type="hidden" asp-for="TestPerson" value="@User.Identity.Name" />
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            int iterator = i + 1;
+            <div class="d-flex row">
+                <input type="hidden" asp-for="Questions[i].Id" />
+                <label class="form-label ml-3">Вопрос №@iterator.</label>
+                <textarea class="form-control mt-2 mb-3 ml-3 mr-3" asp-for="Questions[i].Context" style="resize:none" rows="1"></textarea>
+            </div>
+            int x = 0;
+            <div class="d-flex justify-content-around row">
+                <div>
+                    <textarea class="form-control mt-2 mb-3 ml-3 mr-3" id="Questions[@i].UserAnswers[@x].Content" name="Questions[@i].UserAnswers[@x].Content" style="resize:none" rows="2"></textarea>
+                </div>
+            </div>
+        }
+        <button class="btn btn-outline-dark mt-3" type="submit" id="button">Завершить выполнение</button>
+    </form>
+    <div id="modDialog" class="modal fade">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+</div>
