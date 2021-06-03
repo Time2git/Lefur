@@ -7,7 +7,6 @@ namespace LearnFurther.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UsersWithAccessToTheTask> UsersWithAccesses { get; set; }
-        public DbSet<ListOfUsersRequestingAccess> ListOfUsersRequestingAccesses { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Result> Results { get; set; }

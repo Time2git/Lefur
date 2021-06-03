@@ -78,20 +78,23 @@ namespace LearnFurther.Controllers
                     return View("UserNotAuthenticateModal", "Чтобы приступить к выполнению задания пожалуйста пройдите авторизацию");
                 }
                 else
-                {//здесь бы добавить проверку, что пытается создаль задания его выполнять
+                {//здесь бы добавить проверку, что пытается создатель задания его выполнять
                     var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                     var exist = task.Users.Where(p => p.TaskId == task.Id).FirstOrDefault(e => e.User == user);
                     if (exist != null)
                     {
-                        ExecuteTaskViewModel model1 = new()
+                        if (exist.HaveAccess)//если пользователь в списке и имеет доступ, то збс
                         {
-                            Id = task.Id,
-                            Title = task.Title,
-                            Description = task.Description,
-                            Questions = task.Questions,
-                            TestPerson = HttpContext.User.Identity.Name
-                        };
-                        return View("ExecuteTaskWithFullSolution", model1);
+                            ExecuteTaskViewModel model1 = new()
+                            {
+                                Id = task.Id,
+                                Title = task.Title,
+                                Description = task.Description,
+                                Questions = task.Questions,
+                                TestPerson = HttpContext.User.Identity.Name
+                            };
+                            return View("ExecuteTaskWithFullSolution", model1);
+                        }//надо добавать проверку иначе ...
                     }
                     else
                     {
@@ -155,7 +158,7 @@ namespace LearnFurther.Controllers
         [HttpPost]
         public IActionResult AddUserToWaitingList(RequestAccessToTaskViewModel model)
         {
-            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == model.TaskId).FirstOrDefault(p => p.User.UserName == model.TestPerson);
+            UsersWithAccessToTheTask user = db.UsersWithAccesses.Where(u => u.TaskId == model.TaskId).FirstOrDefault(p => p.User.UserName == model.TestPerson);
             if (user != null)
             {
                 return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Пожалуйста, подождите ответа от составителя задания");
@@ -164,13 +167,14 @@ namespace LearnFurther.Controllers
             {
                 User userr = db.Users.FirstOrDefault(u => u.UserName == model.TestPerson);
                 var task = db.Tasks.FirstOrDefault(a => a.Id == model.TaskId);
-                ListOfUsersRequestingAccess listOf = new()
+                UsersWithAccessToTheTask listOf = new()
                 {
                     TaskId = model.TaskId,
                     Task = task,
-                    User = userr
+                    User = userr,
+                    AccessRequested = true
                 };
-                db.ListOfUsersRequestingAccesses.Add(listOf);
+                db.UsersWithAccesses.Add(listOf);
                 db.SaveChangesAsync();
             }
             return PartialView("UserAlreadyRequestAccessToTheTaskModal", "Запрос на доступ к заданию отправлен составителю.");
@@ -180,7 +184,7 @@ namespace LearnFurther.Controllers
         {
             var user = db.Users.FirstOrDefault(u => u.UserName == HttpContext.User.Identity.Name);
             var task = db.Tasks.Where(s => s.Author == user);
-            var list = db.ListOfUsersRequestingAccesses.Include(p => p.Task).Include(s => s.User).ToList();
+            var list = db.UsersWithAccesses.Include(p => p.Task).Include(s => s.User).ToList();
             var l = list.Where(s => s.Task.Author == user).ToList();
             //ListOfUsersRequestingAccess list = await db.ListOfUsersRequestingAccesses.Where(u => u.TaskId == task[1].Where(s => s.Author == user));
             //var list = db.ListOfUsersRequestingAccesses.FirstOrDefault());
@@ -190,14 +194,15 @@ namespace LearnFurther.Controllers
         [HttpPost]
         public async Task<IActionResult> ShowUserWaitingListAsync(short id)
         {
-            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
+            UsersWithAccessToTheTask user = db.UsersWithAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
             UsersWithAccessToTheTask withAccess = new()
             {
                 TaskId = user.TaskId,
                 User = user.User,
             };
-            await db.UsersWithAccesses.AddAsync(withAccess);
-            db.ListOfUsersRequestingAccesses.Remove(user);
+            user.HaveAccess = true;
+            user.AccessRequested = false;
+            db.UsersWithAccesses.Update(user);
             await db.SaveChangesAsync();
             return RedirectToAction("ShowUserWaitingList");
         }
@@ -205,8 +210,8 @@ namespace LearnFurther.Controllers
         [HttpPost]
         public async Task<IActionResult> AccessDeniedAsync(short id)
         {
-            ListOfUsersRequestingAccess user = db.ListOfUsersRequestingAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
-            db.ListOfUsersRequestingAccesses.Remove(user);
+            UsersWithAccessToTheTask user = db.UsersWithAccesses.Include(u => u.User).FirstOrDefault(p => p.Id == id);
+            db.UsersWithAccesses.Remove(user);
             await db.SaveChangesAsync();
             return RedirectToAction("ShowUserWaitingList");
         }

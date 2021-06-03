@@ -12,5 +12,8 @@ namespace LearnFurther.Models
         public Task Task { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public bool AccessRequested { get; set; }
+        public bool HaveAccess { get; set; }
+        public bool NeedCheck { get; set; }
     }
 }

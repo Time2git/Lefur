@@ -9,7 +9,6 @@ D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\ref\LearnFurther.dll
 D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\LearnFurther.pdb
 D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\LearnFurther.Views.dll
 D:\lefur\LearnFurther\LearnFurther\bin\Debug\net5.0\LearnFurther.Views.pdb
-D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\LearnFurther.csprojAssemblyReference.cache
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\LearnFurther.GeneratedMSBuildEditorConfig.editorconfig
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\LearnFurther.AssemblyInfoInputs.cache
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\LearnFurther.AssemblyInfo.cs
@@ -95,3 +94,4 @@ D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Account\ForgotPa
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\ShowUserWaitingList.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\TestExecutionComplete.cshtml.g.cs
 D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\Razor\Views\Task\ExecuteTaskWithFullSolution.cshtml.g.cs
+D:\lefur\LearnFurther\LearnFurther\obj\Debug\net5.0\LearnFurther.csprojAssemblyReference.cache
