@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LearnFurther.Models
 {
-    public class ApplicationContext : IdentityDbContext<User>
+    public class ApplicationContext : IdentityDbContext<User>//IdentityDbContext<User, Role, int>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UsersWithAccessToTheTask> UsersWithAccesses { get; set; }
