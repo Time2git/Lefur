@@ -10,7 +10,7 @@ namespace LearnFurther.Models
         public short Id { get; set; }
         public string Content { get; set; }
         public bool State { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public  User User { get; set; }
         public short QuestionId { get; set; }
         public  Question Question { get; set; }

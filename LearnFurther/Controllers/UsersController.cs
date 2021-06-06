@@ -54,7 +54,7 @@ namespace LearnFurther.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName};
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id.ToString(), Email = user.Email, FirstName = user.FirstName, LastName = user.LastName};
             return View(model);
         }
 

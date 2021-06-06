@@ -30,7 +30,7 @@
         <span asp-validation-for="PasswordConfirm"></span>
     </div>
     <select class="custom-select" name="UserRole">
-        @foreach (IdentityRole role in Model.Roles)
+        @foreach (Role role in Model.Roles)
         {
             if (role.Name != "Admin")
             {

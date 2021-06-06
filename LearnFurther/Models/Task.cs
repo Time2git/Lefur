@@ -19,8 +19,8 @@ namespace LearnFurther.Models
         public  IList<Question> Questions { get; set; }
         public  ICollection<Result> Results { get; set; }
         public TaskTypes Types { get; set; }
-        //[ForeignKey("UserId")]
-        public int/*?*/ UserId { get; set; }
+        [ForeignKey("UserId")]
+        public int? UserId { get; set; }
         public User Author { get; set; }
         public IList<UsersWithAccessToTheTask> Users { get; set; }
     }

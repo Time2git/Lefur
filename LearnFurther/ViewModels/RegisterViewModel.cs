@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using LearnFurther.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace LearnFurther.ViewModels
@@ -29,7 +30,7 @@ namespace LearnFurther.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
-        public List<IdentityRole> Roles { get; set; }
+        public List<Role> Roles { get; set; }
 
         //public RegisterViewModel()
         //{
