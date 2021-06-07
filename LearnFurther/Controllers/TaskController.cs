@@ -58,7 +58,7 @@ namespace LearnFurther.Controllers
         public async Task<IActionResult> TaskExecuteAsync(short id)
         {
             var task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers)
-                .Include(s => s.Questions).ThenInclude(a => a.UserAnswers).Include(q => q.Users).FirstOrDefaultAsync(u => u.Id == id);
+                .Include(s => s.Questions).Include(q => q.Users).FirstOrDefaultAsync(u => u.Id == id);
             //UsersWithAccessToTheTask usersWith = new()//добавил чтобы чисто проверить код ниже
             //{
             //    TaskId = task.Id,
@@ -131,6 +131,29 @@ namespace LearnFurther.Controllers
             Models.Task task = await db.Tasks.Include(c => c.Questions).ThenInclude(d => d.Answers).FirstOrDefaultAsync(u => u.Id == model.Id);
             CheckViewModel model1 = check.CheckTestTask(model, task);
             return PartialView("TestExecutionComplete", model1);
+        }
+        [HttpPost]
+        public async Task<IActionResult> TaksWithFullSolutionExecute(ExecuteTaskViewModel model)
+        {
+            var task = await db.Tasks.Include(c => c.Questions).ThenInclude(s => s.UserAnswers).Include(q => q.Users).FirstOrDefaultAsync(u => u.Id == model.Id);
+            User user = await _userManager.FindByNameAsync(model.TestPerson);
+            for (int i = 0; i<task.Questions.Count; i++)
+            {
+                if(task.Questions[i].UserAnswers.FirstOrDefault(s => s.UserId == user.Id) != null)
+                {
+                    task.Questions[i].UserAnswers.FirstOrDefault(s => s.UserId == user.Id).Content = model.Questions[i].UserAnswers[0].Content;
+                }
+                else
+                {
+                    var answer = model.Questions[i].UserAnswers[0];
+                    answer.User = user;
+                    answer.UserId = user.Id;
+                    task.Questions[i].UserAnswers.Add(answer);
+                }
+            }
+            db.Tasks.Update(task);
+            db.SaveChanges();
+            return RedirectToAction("TaskList");
         }
 
         public async Task<IActionResult> SaveExecutedTestTask(ExecuteTaskViewModel model)
