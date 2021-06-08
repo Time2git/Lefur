@@ -28,3 +28,9 @@
 ////    var str = '<div class="form-check col-sm-4"><input class="form-check-input" type="checkbox" id = Questions[' + listId + '].Answers[' + x + '].State name = Questions[' + listId + '].Answers[' + x + '].State value = "true"><input class="form-control ml-2 mb-2" name = Questions[' + listId + '].Answers[' + x +'].Content></div >'
 ////    val.insertAdjacentHTML('beforebegin', str);
 ////}
+
+$(document).ready(function () {
+        $.post('/NotificationSender/GetNotifications/', function (data) {
+            $('#span').html(data);
+        });
+});

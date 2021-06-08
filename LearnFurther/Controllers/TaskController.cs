@@ -135,7 +135,7 @@ namespace LearnFurther.Controllers
         [HttpPost]
         public async Task<IActionResult> TaksWithFullSolutionExecute(ExecuteTaskViewModel model)
         {
-            var task = await db.Tasks.Include(c => c.Questions).ThenInclude(s => s.UserAnswers).Include(q => q.Users).FirstOrDefaultAsync(u => u.Id == model.Id);
+            var task = await db.Tasks.Include(c => c.Questions).ThenInclude(s => s.UserAnswers).Include(q => q.Users).Include(d => d.Author).FirstOrDefaultAsync(u => u.Id == model.Id);
             User user = await _userManager.FindByNameAsync(model.TestPerson);
             for (int i = 0; i<task.Questions.Count; i++)
             {
@@ -152,6 +152,18 @@ namespace LearnFurther.Controllers
                 }
             }
             db.Tasks.Update(task);
+            var exist = task.Users.Where(p => p.TaskId == task.Id).FirstOrDefault(e => e.User == user);
+            exist.NeedCheck = true;
+            exist.HaveAccess = false;
+            db.Tasks.Update(task);
+            db.UsersWithAccesses.Update(exist);
+            Notification notification = new()
+            {
+                User = task.Author,
+                HasBeenRead = false,
+                Context = $"Пользователь {user.Email} ожидает проверки задания."
+            };
+            db.Notifications.Add(notification);
             db.SaveChanges();
             return RedirectToAction("TaskList");
         }

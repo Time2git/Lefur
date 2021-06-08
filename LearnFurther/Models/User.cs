@@ -9,6 +9,7 @@ namespace LearnFurther.Models
         public string LastName { get; set; }
         public List<Task> Tasks { get; set; }
         public IList<UsersWithAccessToTheTask> Users { get; set; }
+        public IList<Notification> Notifications { get; set; }
         //public int? RoleId { get; set; }
         //public virtual Role Role { get; set; }
         //public virtual ICollection<Result> Results { get; set; }

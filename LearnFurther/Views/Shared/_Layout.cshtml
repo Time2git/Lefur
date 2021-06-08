@@ -55,6 +55,13 @@
                                     </div>
                                 </div>
                             </li>
+                            <li>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Teacher") || User.IsInRole("Student")) {
+                                    <button type="button" class="btn btn-primary">
+                                        Уведомления <span class="badge badge-light" id="span"></span>
+                                    </button>
+                                }
+                            </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item ml-sm-2 mr-sm-1">
