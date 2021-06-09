@@ -1,26 +1,39 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using LearnFurther.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using LearnFurther.Models;
 using LearnFurther.ViewModels;
+using System.Collections.Generic;
 
 namespace LearnFurther.Controllers
 {
     public class UsersController : Controller
     {
+        List<UserListViewModel> users = new List<UserListViewModel>();
         UserManager<User> _userManager;
-        SignInManager<User> _signInManager;
 
-        public UsersController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
         public IActionResult UserList()
         {
-            return View(_userManager.Users.ToList());
+            var user = _userManager.Users.ToList();
+            int i = 0;
+            foreach (var elem in user)
+            {
+                var role = _userManager.GetRolesAsync(elem).Result.ToList();
+                UserListViewModel model = new()
+                {
+                    Email = elem.Email,
+                    Id = elem.Id,
+                    Role = role[0],
+                };
+                users.Add(model);
+            }
+            return View(users);
         }
 
         public IActionResult Create() => View();
