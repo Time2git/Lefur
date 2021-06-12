@@ -30,7 +30,7 @@
 ////}
 
 $(document).ready(function () {
-        $.post('/NotificationSender/GetNotifications/', function (data) {
+        $.post('/NotificationSender/GetCountOfNotifications/', function (data) {
             $('#span').html(data);
         });
 });

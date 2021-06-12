@@ -17,7 +17,7 @@ namespace LearnFurther.Controllers
             _userManager = userManager;
             db = context;
         }
-        public async Task<int> GetNotificationsAsync()
+        public async Task<int> GetCountOfNotificationsAsync()
         {
             if (HttpContext.User.Identity.Name != null)
             {
