@@ -24,7 +24,7 @@ namespace LearnFurther.Controllers
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.gmail.com", 587, false);
-                await client.AuthenticateAsync("kep7375@gmail.com", "bonny_m_rasputin");
+                await client.AuthenticateAsync("kep7375@gmail.com", "");
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);
